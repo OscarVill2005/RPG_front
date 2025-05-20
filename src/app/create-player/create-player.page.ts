@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '@auth0/auth0-angular';
+
 
 @Component({
   selector: 'app-create-player',
@@ -12,9 +15,17 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
 })
 export class CreatePlayerPage implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient, private auth: AuthService) { }
+
+  public player: any
+  public url = 'http://localhost:3000'
 
   ngOnInit() {
+      this.auth.user$.subscribe((data) => {
+      this.player = data
+      console.log(`Este es el user ${this.player}`);
+    })
+
   }
 
 }
