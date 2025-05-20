@@ -30,7 +30,7 @@ export class HomePage implements OnInit {
       this.http.get(`${this.url}/player/${this.player.email}`).subscribe((response) =>{
       if(response == 'Player not found'){ 
         // If Player doesnt exist create it
-        this.router.navigate(['/create-player/create-player.html'])        
+        this.router.navigate(['/create-player'])        
       } else { //If player exists
 
       }
