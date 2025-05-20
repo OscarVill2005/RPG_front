@@ -4,6 +4,7 @@ import { IonContent, IonButton, IonCol, IonGrid, IonRow, IonImg } from '@ionic/a
 import {FormsModule} from '@angular/forms'
 import { AuthService } from '@auth0/auth0-angular';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class HomePage implements OnInit {
   public player: any
   public url = 'http://localhost:3000'
  
-  constructor(private auth: AuthService, private http: HttpClient) { }
+  constructor(private auth: AuthService, private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
 
@@ -29,8 +30,7 @@ export class HomePage implements OnInit {
       this.http.get(`${this.url}/player/${this.player.email}`).subscribe((response) =>{
       if(response == 'Player not found'){ 
         // If Player doesnt exist create it
-        //Navigate to create-player page
-        
+        this.router.navigate(['/create-player/create-player.html'])        
       } else { //If player exists
 
       }
