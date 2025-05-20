@@ -1,0 +1,23 @@
+ion-content {
+    --background: url('https://i.etsystatic.com/18279207/r/il/0baebc/5022632129/il_fullxfull.5022632129_kwst.jpg') 0 0/100% 100% no-repeat;
+}
+
+ion-col {
+    margin-top: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+ion-img {
+  display: block;
+  max-width: 20%;
+  height: auto;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+ion-img:hover {
+  transform: scale(1.1);
+}
