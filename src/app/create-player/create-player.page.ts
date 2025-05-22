@@ -17,6 +17,16 @@ export class CreatePlayerPage implements OnInit {
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
+  public health_points = 100
+	public mana_points = 100
+	public strength = 100
+	public magical_damage = 100
+	public critical_chance = 0.25
+	public critical_damage = 1.5
+	public defense = 100
+  public experience = 0
+	public level = 1
+	public currency = 0
   public player: any
   public url = 'http://localhost:3000'
 
@@ -26,6 +36,87 @@ export class CreatePlayerPage implements OnInit {
       console.log(`Este es el user ${this.player}`);
     })
 
+  }
+
+  selectMago(){
+
+    this.mana_points = 200
+    this.strength = 30
+    this.defense = 50
+    this.magical_damage = 200
+
+    let body = {
+      id: this.player.email,
+      name: this.player.name,
+      health_points: this.health_points,
+      mana_points: this.mana_points,
+      strength: this.strength,
+      magical_damage: this.magical_damage,
+      critical_chance: this.critical_chance,
+      critical_damage: this.critical_damage,
+      defense: this.defense,
+      experience: this.experience,
+      level: this.level,
+      currency: this.currency
+    }
+    this.http.post(this.url + 'player', body).subscribe((response : any) => {
+      console.log(response)
+    })
+  }
+
+  selectHealer(){
+
+    this.health_points = 80
+    this.mana_points = 150
+    this.strength = 20
+    this.magical_damage = 150
+    this.defense = 50
+
+    let body = {
+      id: this.player.email,
+      name: this.player.name,
+      health_points: this.health_points,
+      mana_points: this.mana_points,
+      strength: this.strength,
+      magical_damage: this.magical_damage,
+      critical_chance: this.critical_chance,
+      critical_damage: this.critical_damage,
+      defense: this.defense,
+      experience: this.experience,
+      level: this.level,
+      currency: this.currency
+    }
+    this.http.post(this.url + 'player', body).subscribe((response : any) => {
+      console.log(response)
+    })
+  }
+
+  selectFighter(){
+
+    this.health_points = 200
+    this.mana_points = 50
+    this.strength = 150
+    this.magical_damage = 20
+    this.defense = 175
+    this.critical_damage = 2
+
+    let body = {
+      id: this.player.email,
+      name: this.player.name,
+      health_points: this.health_points,
+      mana_points: this.mana_points,
+      strength: this.strength,
+      magical_damage: this.magical_damage,
+      critical_chance: this.critical_chance,
+      critical_damage: this.critical_damage,
+      defense: this.defense,
+      experience: this.experience,
+      level: this.level,
+      currency: this.currency
+    }
+    this.http.post(this.url + 'player', body).subscribe((response : any) => {
+      console.log(response)
+    })
   }
 
 }
