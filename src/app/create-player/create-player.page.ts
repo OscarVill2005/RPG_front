@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonCol, IonGrid, IonRow } from '@ionic/angular/standalone';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '@auth0/auth0-angular';
 
@@ -11,7 +11,7 @@ import { AuthService } from '@auth0/auth0-angular';
   templateUrl: './create-player.page.html',
   styleUrls: ['./create-player.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,IonButton, IonCol, IonGrid, IonRow]
 })
 export class CreatePlayerPage implements OnInit {
 
@@ -21,19 +21,25 @@ export class CreatePlayerPage implements OnInit {
 	public mana_points = 100
 	public strength = 100
 	public magical_damage = 100
-	public critical_chance = 0.25
-	public critical_damage = 1.5
+	public critical_chance = 1
+	public critical_damage = 2
 	public defense = 100
   public experience = 0
 	public level = 1
 	public currency = 0
   public player: any
-  public url = 'http://localhost:3000'
+  public user: any
+  public url = 'http://localhost:3300'
 
   ngOnInit() {
       this.auth.user$.subscribe((data) => {
-      this.player = data
-      console.log(`Este es el user ${this.player}`);
+      this.user = data
+      console.log(`Este es el user ${this.user}`);
+      this.player = {
+        email : this.user.email,
+        name : this.user.nickname
+      }
+      console.log(this.player)
     })
 
   }
@@ -59,7 +65,7 @@ export class CreatePlayerPage implements OnInit {
       level: this.level,
       currency: this.currency
     }
-    this.http.post(this.url + 'player', body).subscribe((response : any) => {
+    this.http.post(this.url + '/player', body).subscribe((response : any) => {
       console.log(response)
     })
   }
