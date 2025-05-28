@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonCol, IonGrid, IonRow, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonImg} from '@ionic/angular/standalone';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '@auth0/auth0-angular';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class CreatePlayerPage implements OnInit {
 
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  constructor(private http: HttpClient, private auth: AuthService, private router: Router) { }
 
   public health_points = 100
 	public mana_points = 100
@@ -68,6 +69,7 @@ export class CreatePlayerPage implements OnInit {
     this.http.post(this.url + '/player', body).subscribe((response : any) => {
       console.log(response)
     })
+    this.router.navigate( ['/home'])
   }
 
   selectHealer(){
@@ -95,6 +97,7 @@ export class CreatePlayerPage implements OnInit {
     this.http.post(this.url + 'player', body).subscribe((response : any) => {
       console.log(response)
     })
+    this.router.navigate( ['/home'])
   }
 
   selectFighter(){
@@ -123,6 +126,7 @@ export class CreatePlayerPage implements OnInit {
     this.http.post(this.url + 'player', body).subscribe((response : any) => {
       console.log(response)
     })
+    this.router.navigate( ['/home'])
   }
 
 }
