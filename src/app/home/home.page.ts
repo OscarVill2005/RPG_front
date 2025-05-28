@@ -43,7 +43,6 @@ export class HomePage implements OnInit {
           this.router.navigate(['/create-player'])
           
         } else { //If player exists
-          this.router.navigate(['/home'])
         }
         console.log(response)
 
