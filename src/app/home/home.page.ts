@@ -41,6 +41,7 @@ export class HomePage implements OnInit {
         if (response == 'Player not found') {
           // If Player doesnt exist create it
           this.router.navigate(['/create-player'])
+          
         } else { //If player exists
           this.router.navigate(['/home'])
         }
