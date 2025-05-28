@@ -14,6 +14,9 @@ import { ActivatedRoute } from '@angular/router'
 })
 export class GamePage implements OnInit {
 
+  public game_data: any = [];
+  public info: any
+  public user_list: any = [];
   public socket: any;
   public player: any;
   public url = 'http://localhost:3000';
@@ -29,17 +32,35 @@ export class GamePage implements OnInit {
 
     this.player = JSON.parse(params.player);
 
-    let info = {
+     this.info = {
       code: params.room,
       user_name: this.player.name,
       email: this.player.email
     };
 
-    this.socket.emit('join room', info);
+    this.socket.emit('join room', this.info);
 
-    this.socket.on('user_list_' + info.code, (userList: string[]) => {
+    this.socket.on('user_list_' + this.info.code, (userList: string[]) => {
       console.log(`user list: ${userList}`)
+      this.user_list = userList;
     })
+
+    this.socket.on('game started' + this.info.code, (gamedata: string[]) =>{
+      console.log(`game started: ${gamedata}`)
+      this.game_data = gamedata;
+    })
+
+    this.socket.on('finished_turn' + this.info.code, (gamedata: string[]) =>{
+      console.log(`game started: ${gamedata}`)
+      this.game_data = gamedata;})
+  }
+
+  start(){
+    this.socket.emit('start game' + this.info.code, true)
+  }
+
+  end_turn(){
+    this.socket.emit('turn' + this.info.code, /* lo que hace el player taque, vida, etc.. */ )
   }
 
 }
