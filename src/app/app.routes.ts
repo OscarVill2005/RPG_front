@@ -17,5 +17,9 @@ export const routes: Routes = [
   {
     path: 'create-player',
     loadComponent: () => import('./create-player/create-player.page').then( m => m.CreatePlayerPage)
+  },  {
+    path: 'game',
+    loadComponent: () => import('./game/game.page').then( m => m.GamePage)
   },
+
 ];
