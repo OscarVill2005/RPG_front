@@ -1,15 +1,30 @@
 <ion-content [fullscreen]="true">
-<ion-grid>
-  <ion-row>
-    <ion-col>
-      <ion-button (click)="selectMago()">MAGO</ion-button>
-    </ion-col>
-    <ion-col>
-      <ion-button (click)="selectHealer()">HEALER</ion-button>
-    </ion-col>
-    <ion-col>
-      <ion-button (click)="selectFighter()">Luchador</ion-button>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-img class="character" src="../../assets/healer.png"></ion-img>
+          <ion-img class="character" src="../../assets/estadisticas.png"></ion-img>
+          <ion-img class="btn" src="../../assets/btn_healer.png" (click)="selectMago()"></ion-img>
+        </ion-card>
+      </ion-col>
+      
+      <ion-col>
+        <ion-card>
+          <ion-img class="character" src="../../assets/healer.png"></ion-img>
+          <ion-img class="character" src="../../assets/estadisticas.png"></ion-img>
+          <ion-img class="btn" src="../../assets/btn_healer.png" (click)="selectHealer()"></ion-img>
+        </ion-card>
+      </ion-col>
+      
+      <ion-col>
+        <ion-card>
+          <ion-img class="character" src="../../assets/healer.png"></ion-img>
+          <ion-img class="character" src="../../assets/estadisticas.png"></ion-img>
+          <ion-img class="btn" src="../../assets/btn_healer.png" (click)="selectFighter()"></ion-img>
+        </ion-card>
+      </ion-col>
+      
+    </ion-row>
+  </ion-grid>
 </ion-content>

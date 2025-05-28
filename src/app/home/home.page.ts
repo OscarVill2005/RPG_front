@@ -22,7 +22,6 @@ export class HomePage implements OnInit {
   constructor(private auth: AuthService, private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
-
     this.auth.user$.subscribe((data: any) => {
       this.player = data;
       console.log(this.player)
@@ -38,6 +37,5 @@ export class HomePage implements OnInit {
 
       })
     })
-
   }
 }
