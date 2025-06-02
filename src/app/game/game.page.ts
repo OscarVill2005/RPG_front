@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonImg } from '@ionic/angular/standalone';
 import socket from 'socket.io-client'
 import { ActivatedRoute } from '@angular/router'
 
@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router'
   templateUrl: './game.page.html',
   styleUrls: ['./game.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonGrid, IonRow, IonCol]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonGrid, IonRow, IonCol, IonImg]
 })
 export class GamePage implements OnInit {
 
@@ -66,21 +66,23 @@ export class GamePage implements OnInit {
   turn(hability : string){
 
   if (hability == 'Heal'){
-
+    this.heal = 20;
   } else if (hability == 'Attack'){
-
+    this.damage = this.player.strength
   } else if (hability == 'Defend'){
-
+    this.defense = 20
   } else if (hability == "Special"){
-
+    this.damage = this.player.magical_damage * 2
   }
+  this.end_turn()
 }
   end_turn(){
     this.action = {
       name : this.player.name,
-      
-    };
-
+      heal : this.heal,
+      damage : this.damage,
+      defense : this.defense
+    }; 
     this.socket.emit('turn' + this.info.code, this.action )
   }
 
