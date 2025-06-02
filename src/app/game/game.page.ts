@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import socket from 'socket.io-client'
 import { ActivatedRoute } from '@angular/router'
 
@@ -10,10 +10,14 @@ import { ActivatedRoute } from '@angular/router'
   templateUrl: './game.page.html',
   styleUrls: ['./game.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonGrid, IonRow, IonCol]
 })
 export class GamePage implements OnInit {
 
+  public damage : number = 0;
+  public heal : number = 0;
+  public defense : number = 0;
+  public action : any = []
   public game_data: any = [];
   public info: any
   public user_list: any = [];
@@ -59,8 +63,25 @@ export class GamePage implements OnInit {
     this.socket.emit('start game' + this.info.code, true)
   }
 
+  turn(hability : string){
+
+  if (hability == 'Heal'){
+
+  } else if (hability == 'Attack'){
+
+  } else if (hability == 'Defend'){
+
+  } else if (hability == "Special"){
+
+  }
+}
   end_turn(){
-    this.socket.emit('turn' + this.info.code, /* lo que hace el player taque, vida, etc.. */ )
+    this.action = {
+      name : this.player.name,
+      
+    };
+
+    this.socket.emit('turn' + this.info.code, this.action )
   }
 
 }
