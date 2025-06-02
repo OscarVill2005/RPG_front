@@ -1,3 +1,31 @@
 ion-content {
     --background: url('../../assets/fondo.gif') 0 0/100% 100% no-repeat;
 }
+
+ion-col {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    /* centra horizontalmente */
+    align-items: center;
+}
+
+.grid_players {
+    position: absolute;
+    bottom: 5%;
+    left: 0;
+    width: 100%;
+}
+
+img {
+    width: 35%;
+}
+
+.btn_start{
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.btn_start:hover {
+  transform: scale(1.1);
+}
