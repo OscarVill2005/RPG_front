@@ -64,23 +64,25 @@ export class GamePage implements OnInit {
   }
 
   turn(hability : string){
-
+    
   if (hability == 'Heal'){
-
+    this.heal = 20;
   } else if (hability == 'Attack'){
-
+    this.damage = this.player.strength
   } else if (hability == 'Defend'){
-
+    this.defense = 20
   } else if (hability == "Special"){
-
+    this.damage = this.player.magical_damage * 2
   }
+  this.end_turn()
 }
   end_turn(){
     this.action = {
       name : this.player.name,
-      
+      heal : this.heal,
+      damage : this.damage,
+      defense : this.defense
     };
-
     this.socket.emit('turn' + this.info.code, this.action )
   }
 
