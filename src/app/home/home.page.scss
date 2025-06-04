@@ -1,38 +1,32 @@
-#pesca-img{
-    width: 38%;
-    height: auto;
-    margin-left: 30%;
-}
-
-ion-col {
-    border: 2px, aqua, solid;
-    background-image: url(https://www.shutterstock.com/image-vector/blue-ripples-water-splashes-waves-600nw-2348005975.jpg);
-    height: 100px;
+ion-content {
+    --background: url('https://i.etsystatic.com/18279207/r/il/0baebc/5022632129/il_fullxfull.5022632129_kwst.jpg') 0 0/100% 100% no-repeat;
 }
 
 
+ion-grid {
+    margin-top: 10%;
 
-ion-grid{
-    width: 100%;
-    margin-top: -4%;
 }
 
-#clicksOnScreen{
-    text-align: center;
+.col_rooms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    background-image: url('../../assets/fondo_salas.png');
+    background-size: cover;
+    background-position: center;
 }
 
-#coinsOnScreen{
-    text-align: center;
-}
-
-#restart{
-    margin-bottom: -0.5%;
-}
-
-#prestigio_stats{
-    margin-bottom: -6.5%;
-    margin-left: 0.3%;
-    color: blue;
-    border: solid, 1px, black;
-    width: 12%;
+.btn_room {
+    --background: #754f04;
+    color: white;
+    width: 150px;
+    height: 40px;
+    font-size: 14px;
+    margin: 6px auto;
+    --padding-start: 0;
+    --padding-end: 0;
 }

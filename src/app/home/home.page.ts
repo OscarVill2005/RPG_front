@@ -30,9 +30,6 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.socket = socket(this.url);
-
-
-
     this.auth.user$.subscribe((data: any) => {
       this.player = data;
       console.log(this.player)
@@ -41,7 +38,6 @@ export class HomePage implements OnInit {
         if (response == 'Player not found') {
           // If Player doesnt exist create it
           this.router.navigate(['/create-player'])
-          
         } else { //If player exists
         }
         console.log(response)
@@ -52,13 +48,6 @@ export class HomePage implements OnInit {
 
   joinroom(room_num: number){
     console.log(room_num)
-    // let info = {
-    //   code: room_num,
-    //   user_name: this.player.name,
-    //   email: this.player.email
-    // };
-
-    // this.socket.emit('join room', info);
     this.router.navigate(['/game', {room: room_num, player: JSON.stringify(this.player)}]);
   }
 }

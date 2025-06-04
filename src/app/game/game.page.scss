@@ -5,8 +5,8 @@ ion-content {
 ion-col {
     text-align: center;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    /* centra horizontalmente */
     align-items: center;
 }
 
@@ -28,4 +28,12 @@ img {
 
 .btn_start:hover {
   transform: scale(1.1);
+}
+
+.attack_button{
+    --background: red;
+}
+
+.heal_button{
+    --background: green;
 }
