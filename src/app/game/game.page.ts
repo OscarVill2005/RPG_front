@@ -117,7 +117,8 @@ export class GamePage implements OnInit {
     } if (hability == 3) {
       this.defense = 20
     } if (hability == 4) {
-      this.damage = this.player.magical_damage * 2
+      this.random_damage_mult = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+      this.damage = this.random_damage_mult * 200
     }
     this.end_turn()
   }
