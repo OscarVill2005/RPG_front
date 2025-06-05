@@ -2,7 +2,7 @@
   <ion-grid class="grid_boss">
     <ion-row>
       <ion-col></ion-col>
-      <ion-col> <p class="bosshp">{{game_data?.boss.health}}</p> <img class="boss_img" src="../../assets/boss.gif"> </ion-col>
+      <ion-col> <p class="bosshp">{{jefe}}</p> <img class="boss_img" src="../../assets/boss.gif"> </ion-col>
       <ion-col> <img class="btn_start" src="../../assets/btn_start.png" *ngIf="user_list[0] === info.user_name" (click)="start()"></ion-col>
     </ion-row>
   </ion-grid>
@@ -13,8 +13,7 @@
         <ion-button class="attack_button" *ngIf="user === info.user_name" (click)="turn(1)"> ATACAR </ion-button>
         <ion-button class="heal_button" *ngIf="user === info.user_name" (click)="turn(2)"> CURAR </ion-button>
         <img src="../../assets/healer.png">
-        {{user}}
-        <p class="playerhp" *ngIf="user === info.user_name">{{hp}}</p>
+        <p class="playerhp" *ngIf="user === info.user_name">{{user}} HP: {{hp}}</p>
       </ion-col>
     </ion-row>
   </ion-grid>
