@@ -70,6 +70,7 @@ export class GamePage implements OnInit {
     this.socket.on('finished_turn' + this.info, (gamedata: string[]) => {
       console.log(`next turn: ${JSON.stringify(gamedata)}`)
       this.game_data = gamedata;
+      this.hP()
       console.log(`GAMEDATA AFTER END TURN:` + JSON.stringify(this.game_data))
       this.gameOver();
     })
@@ -160,18 +161,24 @@ export class GamePage implements OnInit {
   }
 
   hP(){
-    if (this.player.name === this.game_data.player1.name){
-      this.hp = this.game_data.player1.health_point
+    if (this.player.nickname === this.game_data.player1.name){
+      this.hp = this.game_data.player1.health_points
     }
-    if (this.player.name === this.game_data.player2.name){
-      this.hp = this.game_data.player2.health_point
+    if (this.player.nickname === this.game_data.player2.name){
+      this.hp = this.game_data.player2.health_points
     }
-    if (this.player.name === this.game_data.player3.name){
-      this.hp = this.game_data.player3.health_point
+    if (this.player.nickname === this.game_data.player3.name){
+      this.hp = this.game_data.player3.health_points
     }
-    if (this.player.name === this.game_data.player4.name){
-      this.hp = this.game_data.player4.health_point
+    if (this.player.nickname === this.game_data.player4.name){
+      this.hp = this.game_data.player4.health_points
     }
+
+<<<<<<< HEAD
+=======
+    this.jefe = this.game_data.boss.health
+
   }
 
+>>>>>>> f2744eab50181e8ca9efda12486fe8246fd9629a
 }
