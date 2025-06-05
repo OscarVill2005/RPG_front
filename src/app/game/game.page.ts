@@ -17,6 +17,7 @@ export interface UserInfo { code: string; user_name: string; email: string; };
 })
 export class GamePage implements OnInit {
 
+  public random_damage_mult: number = 0;
   public damage: number = 0;
   public heal: number = 0;
   public defense: number = 0;
@@ -57,29 +58,33 @@ export class GamePage implements OnInit {
     })
 
     this.socket.on('game started' + this.info.code, (gamedata: string[]) => {
-      console.log(`game started: ${gamedata}`)
+      console.log(`game started: ${JSON.stringify(gamedata)}`)
       this.game_data = gamedata;
     })
 
-    this.socket.on('finished_turn' + this.info.code, (gamedata: string[]) => {
+    this.socket.on('finished_turn' + this.info, (gamedata: string[]) => {
       console.log(`game started: ${gamedata}`)
       this.game_data = gamedata;
     })
   }
 
   start() {
-    this.socket.emit('start game' + this.info?.code, true)
+    this.socket.emit('start game' + this.info.code, this.user_list)
   }
 
-  turn(hability: string) {
+  turn(hability: number) {
 
-    if (hability == 'Heal') {
+    console.log('PLAYER STATS:' + JSON.stringify(this.player))
+
+    if (hability == 2) {
       this.heal = 20;
-    } else if (hability == 'Attack') {
-      this.damage = this.player.strength
-    } else if (hability == 'Defend') {
+    } if (hability == 1) {
+      this.random_damage_mult = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+      this.damage = 100 * this.random_damage_mult
+      console.log('PLAYER DAMAGE:' + this.damage)
+    } if (hability == 3) {
       this.defense = 20
-    } else if (hability == "Special") {
+    } if (hability == 4) {
       this.damage = this.player.magical_damage * 2
     }
     this.end_turn()
@@ -91,7 +96,13 @@ export class GamePage implements OnInit {
       damage: this.damage,
       defense: this.defense
     };
-    this.socket.emit('turn' + this.info?.code, this.action)
+    this.socket.emit('turn' + this.info.code, this.action)
+    this.action = {
+      name: this.player.name,
+      heal: 0,
+      damage: 0,
+      defense: 0     
+    }
   }
 
 }
