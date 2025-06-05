@@ -178,5 +178,7 @@ export class GamePage implements OnInit {
     this.jefe = this.game_data.boss.health
 
   }
+  //pepe
+  
 
 }
