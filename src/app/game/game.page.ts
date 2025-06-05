@@ -83,6 +83,20 @@ export class GamePage implements OnInit {
       buttons: ['Cerrar'],
     });
 
+    
+
+    await alert.present();
+  }
+
+      async presentAlertlose() {
+    const alert = await this.alertController.create({
+      header: '¡Has perdido la batalla!',
+      message: '¡Bien intentado guerrero!',
+      buttons: ['Cerrar'],
+    });
+
+    
+
     await alert.present();
   }
 
@@ -129,7 +143,8 @@ export class GamePage implements OnInit {
       console.log('VICTORIAAAAAAAAAAA')
       this.router.navigate(['/home'])
     } else if ( this.game_data.game.game_finished === true && this.game_data.game.game_over === true ){
-      //DERROTA
+      this.presentAlertlose()
+      this.router.navigate(['/home'])
     }
   }
 
