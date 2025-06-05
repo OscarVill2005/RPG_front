@@ -2,16 +2,29 @@ ion-content {
     --background: url('https://i.etsystatic.com/18279207/r/il/0baebc/5022632129/il_fullxfull.5022632129_kwst.jpg') 0 0/100% 100% no-repeat;
 }
 
+ion-grid{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1{
+    font-weight: bold; 
+    color: #754f04;
+     font-size: 60px;
+}
+
+ion-col{
+    margin-top: 7%;
+}
+
 ion-card {
     --background: url('https://i.pinimg.com/736x/a1/4e/63/a14e63a5c5a6ab39a3dfa52c60d35230.jpg') 0 0/100% 100% no-repeat;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Centra horizontalmente */
     justify-content: center;
-    /* Centra verticalmente */
     text-align: center;
-    /* Centra el texto */
     height: 100%;
 }
 

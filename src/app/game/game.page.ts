@@ -73,7 +73,7 @@ export class GamePage implements OnInit {
 
     async presentAlert() {
     const alert = await this.alertController.create({
-      header: '¿Has ganado la batalla!',
+      header: '¡Has ganado la batalla!',
       message: '¡Bien luchado guerrero!',
       buttons: ['Cerrar'],
     });
