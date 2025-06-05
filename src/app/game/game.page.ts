@@ -66,6 +66,8 @@ export class GamePage implements OnInit {
       console.log(`game started: ${gamedata}`)
       this.game_data = gamedata;
     })
+
+
   }
 
   start() {
@@ -102,6 +104,14 @@ export class GamePage implements OnInit {
       heal: 0,
       damage: 0,
       defense: 0     
+    }
+  }
+
+  gameOver(){
+    if ( this.game_data.game.game_finished === true && this.game_data.game.game_over === false ){
+      //VICTORIA
+    } else if ( this.game_data.game.game_finished === true && this.game_data.game.game_over === true ){
+      //DERROTA
     }
   }
 
