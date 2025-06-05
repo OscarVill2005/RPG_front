@@ -14,6 +14,7 @@
         <ion-button class="heal_button" *ngIf="user === info.user_name" (click)="turn(2)"> CURAR </ion-button>
         <img src="../../assets/healer.png">
         {{user}}
+        <p class="playerhp" *ngIF="user === info.user_name">{{hp}}</p>
       </ion-col>
     </ion-row>
   </ion-grid>
