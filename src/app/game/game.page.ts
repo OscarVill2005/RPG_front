@@ -32,6 +32,7 @@ export class GamePage implements OnInit {
   public player: any;
   public url = 'http://localhost:3000';
   public hp : number = 0;
+  public jefe : number = 0;
 
   constructor(private route: ActivatedRoute, private alertController: AlertController,  private router: Router) {
 
@@ -65,6 +66,7 @@ export class GamePage implements OnInit {
       console.log(`game started: ${JSON.stringify(gamedata)}`)
       this.game_data = gamedata;
       this.hP()
+      this.bosshp()
     })
 
     this.socket.on('finished_turn' + this.info, (gamedata: string[]) => {
@@ -172,6 +174,10 @@ export class GamePage implements OnInit {
     if (this.player.name === this.game_data.player4.name){
       this.hp = this.game_data.player4.health_point
     }
+  }
+
+  bosshp(){
+    this.jefe = this.game_data.boss.halth
   }
 
 }
