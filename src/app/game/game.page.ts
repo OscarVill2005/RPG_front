@@ -107,16 +107,20 @@ export class GamePage implements OnInit {
   turn(hability: number) {
 
     console.log('PLAYER STATS:' + JSON.stringify(this.player))
+    console.log('HABILITY:' + hability)
 
-    if (hability == 2) {
+    if (hability === 2) {
       this.heal = 20;
-    } if (hability == 1) {
+    } 
+    if (hability === 1) {
       this.random_damage_mult = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
       this.damage = 100 * this.random_damage_mult
       console.log('PLAYER DAMAGE:' + this.damage)
-    } if (hability == 3) {
+    } 
+    if (hability == 3) {
       this.defense = 20
-    } if (hability == 4) {
+    } 
+    if (hability == 4) {
       this.random_damage_mult = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
       this.damage = this.random_damage_mult * 200
     }
@@ -129,6 +133,7 @@ export class GamePage implements OnInit {
       damage: this.damage,
       defense: this.defense
     };
+    console.log('ACTION:' + JSON.stringify(this.action))
     this.socket.emit('turn' + this.info.code, this.action)
     this.action = {
       name: this.player.name,
@@ -136,6 +141,9 @@ export class GamePage implements OnInit {
       damage: 0,
       defense: 0     
     }
+    this.defense = 0
+    this.heal = 0
+    this.damage = 0
   }
 
   gameOver(){
