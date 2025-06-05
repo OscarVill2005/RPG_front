@@ -10,11 +10,17 @@ ion-col {
     align-items: center;
 }
 
-.grid_players {
-    position: absolute;
-    bottom: 5%;
-    left: 0;
-    width: 100%;
+.grid_players{
+    margin-top: 20%;
+}
+
+.grid_players img {
+  border: white 1px solid;
+  margin-top: 30%;
+  width: 150px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 img {

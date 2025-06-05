@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonImg, IonButton } from '@ionic/angular/standalone';
 import socket from 'socket.io-client'
 import { ActivatedRoute } from '@angular/router'
+import { AlertController } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
+
 
 export interface UserInfo { code: string; user_name: string; email: string; };
 
@@ -29,7 +32,7 @@ export class GamePage implements OnInit {
   public player: any;
   public url = 'http://localhost:3000';
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private alertController: AlertController,  private router: Router) {
 
     this.socket = socket(this.url);
 
@@ -63,9 +66,38 @@ export class GamePage implements OnInit {
     })
 
     this.socket.on('finished_turn' + this.info, (gamedata: string[]) => {
-      console.log(`game started: ${gamedata}`)
+      console.log(`next turn: ${JSON.stringify(gamedata)}`)
       this.game_data = gamedata;
+      console.log(`GAMEDATA AFTER END TURN:` + JSON.stringify(this.game_data))
+      this.gameOver();
     })
+
+
+
+  }
+
+    async presentAlert() {
+    const alert = await this.alertController.create({
+      header: '¡Has ganado la batalla!',
+      message: '¡Bien luchado guerrero!',
+      buttons: ['Cerrar'],
+    });
+
+    
+
+    await alert.present();
+  }
+
+      async presentAlertlose() {
+    const alert = await this.alertController.create({
+      header: '¡Has perdido la batalla!',
+      message: '¡Bien intentado guerrero!',
+      buttons: ['Cerrar'],
+    });
+
+    
+
+    await alert.present();
   }
 
   start() {
@@ -75,17 +107,22 @@ export class GamePage implements OnInit {
   turn(hability: number) {
 
     console.log('PLAYER STATS:' + JSON.stringify(this.player))
+    console.log('HABILITY:' + hability)
 
-    if (hability == 2) {
+    if (hability === 2) {
       this.heal = 20;
-    } if (hability == 1) {
+    } 
+    if (hability === 1) {
       this.random_damage_mult = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
       this.damage = 100 * this.random_damage_mult
       console.log('PLAYER DAMAGE:' + this.damage)
-    } if (hability == 3) {
+    } 
+    if (hability == 3) {
       this.defense = 20
-    } if (hability == 4) {
-      this.damage = this.player.magical_damage * 2
+    } 
+    if (hability == 4) {
+      this.random_damage_mult = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+      this.damage = this.random_damage_mult * 200
     }
     this.end_turn()
   }
@@ -96,12 +133,27 @@ export class GamePage implements OnInit {
       damage: this.damage,
       defense: this.defense
     };
+    console.log('ACTION:' + JSON.stringify(this.action))
     this.socket.emit('turn' + this.info.code, this.action)
     this.action = {
       name: this.player.name,
       heal: 0,
       damage: 0,
       defense: 0     
+    }
+    this.defense = 0
+    this.heal = 0
+    this.damage = 0
+  }
+
+  gameOver(){
+    if ( this.game_data.game.game_finished === true && this.game_data.game.game_over === false ){
+      this.presentAlert()
+      console.log('VICTORIAAAAAAAAAAA')
+      this.router.navigate(['/home'])
+    } else if ( this.game_data.game.game_finished === true && this.game_data.game.game_over === true ){
+      this.presentAlertlose()
+      this.router.navigate(['/home'])
     }
   }
 
