@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonImg, IonButton } from '@ionic/angular/standalone';
 import socket from 'socket.io-client'
 import { ActivatedRoute } from '@angular/router'
+import { AlertController } from '@ionic/angular/standalone';
 
 export interface UserInfo { code: string; user_name: string; email: string; };
 
@@ -29,7 +30,7 @@ export class GamePage implements OnInit {
   public player: any;
   public url = 'http://localhost:3000';
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private alertController: AlertController) {
 
     this.socket = socket(this.url);
 
@@ -68,6 +69,16 @@ export class GamePage implements OnInit {
     })
 
 
+  }
+
+    async presentAlert() {
+    const alert = await this.alertController.create({
+      header: '¿Has ganado la batalla!',
+      message: '¡Bien luchado guerrero!',
+      buttons: ['Cerrar'],
+    });
+
+    await alert.present();
   }
 
   start() {
@@ -109,7 +120,7 @@ export class GamePage implements OnInit {
 
   gameOver(){
     if ( this.game_data.game.game_finished === true && this.game_data.game.game_over === false ){
-      //VICTORIA
+      this.presentAlert()
     } else if ( this.game_data.game.game_finished === true && this.game_data.game.game_over === true ){
       //DERROTA
     }
