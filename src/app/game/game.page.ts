@@ -5,6 +5,8 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, I
 import socket from 'socket.io-client'
 import { ActivatedRoute } from '@angular/router'
 import { AlertController } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
+
 
 export interface UserInfo { code: string; user_name: string; email: string; };
 
@@ -30,7 +32,7 @@ export class GamePage implements OnInit {
   public player: any;
   public url = 'http://localhost:3000';
 
-  constructor(private route: ActivatedRoute, private alertController: AlertController) {
+  constructor(private route: ActivatedRoute, private alertController: AlertController,  private router: Router) {
 
     this.socket = socket(this.url);
 
@@ -64,16 +66,19 @@ export class GamePage implements OnInit {
     })
 
     this.socket.on('finished_turn' + this.info, (gamedata: string[]) => {
-      console.log(`game started: ${gamedata}`)
+      console.log(`next turn: ${JSON.stringify(gamedata)}`)
       this.game_data = gamedata;
+      console.log(`GAMEDATA AFTER END TURN:` + JSON.stringify(this.game_data))
+      this.gameOver();
     })
+
 
 
   }
 
     async presentAlert() {
     const alert = await this.alertController.create({
-      header: '¿Has ganado la batalla!',
+      header: '¡Has ganado la batalla!',
       message: '¡Bien luchado guerrero!',
       buttons: ['Cerrar'],
     });
@@ -121,6 +126,8 @@ export class GamePage implements OnInit {
   gameOver(){
     if ( this.game_data.game.game_finished === true && this.game_data.game.game_over === false ){
       this.presentAlert()
+      console.log('VICTORIAAAAAAAAAAA')
+      this.router.navigate(['/home'])
     } else if ( this.game_data.game.game_finished === true && this.game_data.game.game_over === true ){
       //DERROTA
     }
