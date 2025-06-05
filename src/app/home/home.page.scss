@@ -10,18 +10,19 @@ ion-content {
 .col_rooms {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
     justify-content: center;
     align-items: center;
     height: 60vh;
     background-image: url('../../assets/fondo_salas.png');
-    
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .btn_room {
     --background: #754f04;
     color: white;
-    width: 150px;
+    width: 160px;
     height: 40px;
     font-size: 14px;
     margin: 6px auto;
