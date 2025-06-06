@@ -26,6 +26,9 @@ bootstrapApplication(AppComponent, {
             authorizationParams: {
               redirect_uri: window.location.origin
             }
+          }), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
           }),
          
   ],
