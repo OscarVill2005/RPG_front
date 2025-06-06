@@ -62,13 +62,14 @@ export class GamePage implements OnInit {
       this.user_list = userList;
     })
 
+    console.log('GAME STARTED:' + this.info.code)
     this.socket.on('game started' + this.info.code, (gamedata: string[]) => {
       console.log(`game started: ${JSON.stringify(gamedata)}`)
       this.game_data = gamedata;
       this.hP()
     })
 
-    this.socket.on('finished_turn' + this.info, (gamedata: string[]) => {
+    this.socket.on('finished_turn' + this.info.code, (gamedata: string[]) => {
       console.log(`next turn: ${JSON.stringify(gamedata)}`)
       this.game_data = gamedata;
       this.hP()
