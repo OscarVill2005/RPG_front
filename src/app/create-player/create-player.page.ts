@@ -30,7 +30,7 @@ export class CreatePlayerPage implements OnInit {
 	public currency = 0
   public player: any
   public user: any
-  public url = 'http://localhost:3000'
+  public url = 'https://rpg-back-dcpr.onrender.com'
 
   ngOnInit() {
       this.auth.user$.subscribe((data) => {

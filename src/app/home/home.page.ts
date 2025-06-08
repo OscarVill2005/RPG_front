@@ -24,7 +24,7 @@ export class HomePage implements OnInit {
   code = ''
   joined = false 
   public player: any
-  public url = 'http://localhost:3000'
+  public url = 'https://rpg-back-dcpr.onrender.com'
 
   constructor(private auth: AuthService, private http: HttpClient, private router: Router) { }
 

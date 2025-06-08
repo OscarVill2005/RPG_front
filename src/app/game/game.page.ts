@@ -1,41 +1,69 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonImg, IonButton } from '@ionic/angular/standalone';
-import socket from 'socket.io-client'
-import { ActivatedRoute } from '@angular/router'
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonImg,
+  IonButton,
+} from '@ionic/angular/standalone';
+import socket from 'socket.io-client';
+import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 
-
-export interface UserInfo { code: string; user_name: string; email: string; };
-
+export interface UserInfo {
+  code: string;
+  user_name: string;
+  email: string;
+}
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.page.html',
   styleUrls: ['./game.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonGrid, IonRow, IonCol, IonImg, IonButton]
+  imports: [
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    CommonModule,
+    FormsModule,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonImg,
+    IonButton,
+  ],
 })
 export class GamePage implements OnInit {
-
   public random_damage_mult: number = 0;
   public damage: number = 0;
   public heal: number = 0;
   public defense: number = 0;
-  public action: any = []
+  public action: any = [];
   public game_data: any = [];
-  public info: UserInfo ;
+  public info: UserInfo;
   public user_list: any = [];
   public socket: any;
   public player: any;
-  public url = 'http://localhost:3000';
-  public hp : number = 0;
-  public jefe : number = 0;
+  public url = 'https://rpg-back-dcpr.onrender.com';
+  public hp: number = 0;
+  public jefe: number = 0;
 
-  constructor(private route: ActivatedRoute, private alertController: AlertController,  private router: Router) {
+  public game_started: boolean = false;
 
+  constructor(
+    private route: ActivatedRoute,
+    private alertController: AlertController,
+    private router: Router
+  ) {
     this.socket = socket(this.url);
 
     let params: any = this.route.snapshot.params;
@@ -45,137 +73,137 @@ export class GamePage implements OnInit {
     this.info = {
       code: params.room,
       user_name: this.player.name,
-      email: this.player.emails
+      email: this.player.email,
     };
   }
 
   ngOnInit() {
+    console.log(this.route.snapshot.params);
 
-    console.log(this.route.snapshot.params)
-
-    console.log(`Esto es this.info ${JSON.stringify(this.info)}`)
+    console.log(`Esto es this.info ${JSON.stringify(this.info)}`);
 
     this.socket.emit('join room', this.info);
 
     this.socket.on('user_list_' + this.info.code, (userList: string[]) => {
-      console.log(`user list: ${userList}`)
+      console.log(`user list: ${userList}`);
       this.user_list = userList;
-    })
+    });
 
-    console.log('GAME STARTED:' + this.info.code)
+    console.log('GAME STARTED:' + this.info.code);
     this.socket.on('game started' + this.info.code, (gamedata: string[]) => {
-      console.log(`game started: ${JSON.stringify(gamedata)}`)
+      console.log(`game started: ${JSON.stringify(gamedata)}`);
       this.game_data = gamedata;
-      this.hP()
-    })
+      if (!this.game_started) {
+        this.start();
+        this.game_started = true;
+      }
+      this.hP();
+    });
 
     this.socket.on('finished_turn' + this.info.code, (gamedata: string[]) => {
-      console.log(`next turn: ${JSON.stringify(gamedata)}`)
+      console.log(`next turn: ${JSON.stringify(gamedata)}`);
       this.game_data = gamedata;
-      this.hP()
-      console.log(`GAMEDATA AFTER END TURN:` + JSON.stringify(this.game_data))
+      this.hP();
+      console.log(`GAMEDATA AFTER END TURN:` + JSON.stringify(this.game_data));
       this.gameOver();
-    })
-
-
-
+    });
   }
 
-    async presentAlert() {
+  async presentAlert() {
     const alert = await this.alertController.create({
       header: '¡Has ganado la batalla!',
       message: '¡Bien luchado guerrero!',
       buttons: ['Cerrar'],
     });
 
-    
-
     await alert.present();
   }
 
-      async presentAlertlose() {
+  async presentAlertlose() {
     const alert = await this.alertController.create({
       header: '¡Has perdido la batalla!',
       message: '¡Bien intentado guerrero!',
       buttons: ['Cerrar'],
     });
 
-    
-
     await alert.present();
   }
 
   start() {
-    this.socket.emit('start game' + this.info.code, this.user_list)
+    this.socket.emit('start game' + this.info.code, this.user_list);
   }
 
-  turn(hability: number) {
+  start_turn(hability: number) {
+    console.log('PLAYER STATS:' + JSON.stringify(this.player));
+    console.log('HABILITY:' + hability);
 
-    console.log('PLAYER STATS:' + JSON.stringify(this.player))
-    console.log('HABILITY:' + hability)
+    if (hability === 1) {
+      this.random_damage_mult = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+      this.damage = 100 * this.random_damage_mult;
+      console.log('PLAYER DAMAGE:' + this.damage);
+    }
 
     if (hability === 2) {
       this.heal = 20;
-    } 
-    if (hability === 1) {
-      this.random_damage_mult = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-      this.damage = 100 * this.random_damage_mult
-      console.log('PLAYER DAMAGE:' + this.damage)
-    } 
-    if (hability == 3) {
-      this.defense = 20
-    } 
-    if (hability == 4) {
-      this.random_damage_mult = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-      this.damage = this.random_damage_mult * 200
     }
-    this.end_turn()
+
+    this.end_turn();
   }
+
   end_turn() {
     this.action = {
       name: this.player.name,
       heal: this.heal,
       damage: this.damage,
-      defense: this.defense
+      defense: this.defense,
     };
-    console.log('ACTION:' + JSON.stringify(this.action))
-    this.socket.emit('turn' + this.info.code, this.action)
+    console.log('ACTION:' + JSON.stringify(this.action));
+    console.log(this.info.code);
+
+    this.socket.emit('turn' + this.info.code, this.action);
+
     this.action = {
       name: this.player.name,
       heal: 0,
       damage: 0,
-      defense: 0     
-    }
-    this.defense = 0
-    this.heal = 0
-    this.damage = 0
+      defense: 0,
+    };
+    this.defense = 0;
+    this.heal = 0;
+    this.damage = 0;
   }
 
-  gameOver(){
-    if ( this.game_data.game.game_finished === true && this.game_data.game.game_over === false ){
-      this.presentAlert()
-      console.log('VICTORIAAAAAAAAAAA')
-      this.router.navigate(['/home'])
-    } else if ( this.game_data.game.game_finished === true && this.game_data.game.game_over === true ){
-      this.presentAlertlose()
-      this.router.navigate(['/home'])
+  gameOver() {
+    if (
+      this.game_data.game.game_finished === true &&
+      this.game_data.game.game_over === false
+    ) {
+      this.presentAlert();
+      console.log('VICTORIAAAAAAAAAAA');
+      this.router.navigate(['/home']);
+    } else if (
+      this.game_data.game.game_finished === true &&
+      this.game_data.game.game_over === true
+    ) {
+      this.presentAlertlose();
+      this.router.navigate(['/home']);
     }
   }
 
-  hP(){
-    if (this.player.nickname === this.game_data.player1.name){
-      this.hp = this.game_data.player1.health_points
+  hP() {
+    if (this.player.nickname === this.game_data.player1.name) {
+      this.hp = this.game_data.player1.health_points;
     }
-    if (this.player.nickname === this.game_data.player2.name){
-      this.hp = this.game_data.player2.health_points
+    if (this.player.nickname === this.game_data.player2.name) {
+      this.hp = this.game_data.player2.health_points;
     }
-    if (this.player.nickname === this.game_data.player3.name){
-      this.hp = this.game_data.player3.health_points
+    if (this.player.nickname === this.game_data.player3.name) {
+      this.hp = this.game_data.player3.health_points;
     }
-    if (this.player.nickname === this.game_data.player4.name){
-      this.hp = this.game_data.player4.health_points
+    if (this.player.nickname === this.game_data.player4.name) {
+      this.hp = this.game_data.player4.health_points;
     }
 
-    this.jefe = this.game_data.boss.health
-}
+    this.jefe = this.game_data.boss.health;
+  }
 }
